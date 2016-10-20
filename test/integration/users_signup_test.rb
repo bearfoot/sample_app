@@ -8,7 +8,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_select "form[action=?]", "/signup"
 
     assert_no_difference 'User.count' do
-      post signup_path, params: {user: {name: "",
+      post users_path, params: {user: {name: "",
                                        email: "user@invalid",
                                        password: "foo",
                                        password_confirmation: "foo"}}
@@ -46,6 +46,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_select 'div[class="alert alert-success"]', count: 1, text: "Welcome to the Sample App!"
     assert_select "section[class=user_info]", count: 1
     assert_template 'users/show'
+    assert is_logged_in?
   end
 
 end
